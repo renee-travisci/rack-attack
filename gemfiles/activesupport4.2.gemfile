@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gem "activesupport", "~> 4.2.0"
 gem "actionpack", "~> 4.2.0"
-gem "listen", "<= 3.1.4", platforms: [:ruby_20, :ruby_21]
+gem "listen", "<= 3.0.6", platforms: [:ruby_20, :ruby_21]
 
 group :development do
   gem "pry"
