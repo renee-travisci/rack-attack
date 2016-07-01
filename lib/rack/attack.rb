@@ -24,17 +24,19 @@ class Rack::Attack
     def safelist(name, &block)
       self.safelists[name] = Safelist.new(name, block)
     end
-    def whitelist
+    
+    def whitelist(name, &block)
       warn "[DEPRECATION] 'whitelist' is deprecated.  Please use 'safelist' instead."
-      safelist
+      safelist(name, &block)
     end
 
     def blocklist(name, &block)
       self.blocklists[name] = Blocklist.new(name, block)
     end
-    def blacklist
+
+    def blacklist(name, &block)
       warn "[DEPRECATION] 'blacklist' is deprecated.  Please use 'blocklist' instead."
-      blocklist
+      blocklist(name, &block)
     end
 
     def throttle(name, options, &block)
