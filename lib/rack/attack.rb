@@ -24,9 +24,17 @@ class Rack::Attack
     def safelist(name, &block)
       self.safelists[name] = Safelist.new(name, block)
     end
+    def whitelist
+      warn "[DEPRECATION] 'whitelist' is deprecated.  Please use 'safelist' instead."
+      safelist
+    end
 
     def blocklist(name, &block)
       self.blocklists[name] = Blocklist.new(name, block)
+    end
+    def blacklist
+      warn "[DEPRECATION] 'blacklist' is deprecated.  Please use 'blocklist' instead."
+      blocklist
     end
 
     def throttle(name, options, &block)
@@ -42,16 +50,36 @@ class Rack::Attack
     def throttles;  @throttles  ||= {}; end
     def tracks;     @tracks     ||= {}; end
 
+    def whitelists
+      warn "[DEPRECATION] 'whitelists' is deprecated.  Please use 'safelists' instead."
+      safelists
+    end
+
+    def blacklists
+      warn "[DEPRECATION] 'blacklists' is deprecated.  Please use 'blocklists' instead."
+      blocklists
+    end
+
     def safelisted?(req)
       safelists.any? do |name, safelist|
         safelist[req]
       end
     end
 
+    def whitelisted?
+      warn "[DEPRECATION] 'whitelisted?' is deprecated.  Please use 'safelisted?' instead."
+      safelisted?
+    end
+
     def blocklisted?(req)
       blocklists.any? do |name, blocklist|
         blocklist[req]
       end
+    end
+
+    def blacklisted?
+      warn "[DEPRECATION] 'blacklisted?' is deprecated.  Please use 'blocklisted?' instead."
+      blocklisted?
     end
 
     def throttled?(req)

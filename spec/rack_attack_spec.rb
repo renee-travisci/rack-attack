@@ -23,6 +23,13 @@ describe 'Rack::Attack' do
     it('has a blocklist') {
       Rack::Attack.blocklists.key?("ip #{@bad_ip}").must_equal true
     }
+    
+    it('has a blacklist with a deprication warning') {
+      stdout, stderror  = capture_io do
+        Rack::Attack.blacklists.key?("ip #{@bad_ip}").must_equal true
+      end
+      assert_match "[DEPRECATION] 'blacklists' is deprecated.  Please use 'blocklists' instead.", stderror
+    }
 
     describe "a bad request" do
       before { get '/', {}, 'REMOTE_ADDR' => @bad_ip }
@@ -46,6 +53,14 @@ describe 'Rack::Attack' do
       end
 
       it('has a safelist'){ Rack::Attack.safelists.key?("good ua") }
+
+      it('has a whitelist with a deprication warning') {
+        stdout, stderror  = capture_io do
+          Rack::Attack.whitelists.key?("good ua")
+        end
+        assert_match "[DEPRECATION] 'whitelists' is deprecated.  Please use 'safelists' instead.", stderror
+      }
+
       describe "with a request match both safelist & blocklist" do
         before { get '/', {}, 'REMOTE_ADDR' => @bad_ip, 'HTTP_USER_AGENT' => @good_ua }
         it "should allow safelists before blocklists" do
