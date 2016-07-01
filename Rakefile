@@ -6,6 +6,7 @@ require 'rake/testtask'
 namespace :test do
   Rake::TestTask.new(:units) do |t|
     t.pattern = "spec/*_spec.rb"
+    t.warning = false
   end
 
   Rake::TestTask.new(:integration) do |t|
